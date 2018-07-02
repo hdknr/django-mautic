@@ -6,6 +6,7 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 
 class AssetDownloads(models.Model):
@@ -296,8 +297,8 @@ class ContactMergeRecords(models.Model):
 
 class DynamicContent(models.Model):
     category = models.ForeignKey(Categories, models.DO_NOTHING, blank=True, null=True)
-    translation_parent = models.ForeignKey('self', models.DO_NOTHING, blank=True, null=True)
-    variant_parent = models.ForeignKey('self', models.DO_NOTHING, blank=True, null=True)
+    translation_parent = models.ForeignKey('self', models.DO_NOTHING, related_name='translation_children', blank=True, null=True)
+    variant_parent = models.ForeignKey('self', models.DO_NOTHING, related_name='variant_children', blank=True, null=True)
     is_published = models.IntegerField()
     date_added = models.DateTimeField(blank=True, null=True)
     created_by = models.IntegerField(blank=True, null=True)
@@ -434,8 +435,8 @@ class EmailStatsDevices(models.Model):
 
 class Emails(models.Model):
     category = models.ForeignKey(Categories, models.DO_NOTHING, blank=True, null=True)
-    translation_parent = models.ForeignKey('self', models.DO_NOTHING, blank=True, null=True)
-    variant_parent = models.ForeignKey('self', models.DO_NOTHING, blank=True, null=True)
+    translation_parent = models.ForeignKey('self', models.DO_NOTHING, related_name='translation_children', blank=True, null=True)
+    variant_parent = models.ForeignKey('self', models.DO_NOTHING, related_name='variant_children', blank=True, null=True)
     unsubscribeform = models.ForeignKey('Forms', models.DO_NOTHING, blank=True, null=True)
     preference_center = models.ForeignKey('Pages', models.DO_NOTHING, blank=True, null=True)
     is_published = models.IntegerField()
@@ -812,6 +813,11 @@ class LeadLists(models.Model):
     class Meta:
         managed = False
         db_table = 'lead_lists'
+        verbose_name = _('Segment')
+        verbose_name_plural = _('Segments')
+
+    def __str__(self):
+        return f"{self.name}"
 
 
 class LeadListsLeads(models.Model):
@@ -825,6 +831,8 @@ class LeadListsLeads(models.Model):
         managed = False
         db_table = 'lead_lists_leads'
         unique_together = (('leadlist', 'lead'),)
+        verbose_name = _('Segmented Lead')
+        verbose_name_plural = _('Segmented Leads')
 
 
 class LeadNotes(models.Model):
@@ -961,6 +969,11 @@ class Leads(models.Model):
     class Meta:
         managed = False
         db_table = 'leads'
+        verbose_name = _('Contanct')
+        verbose_name_plural = _('Contacts')
+
+    def __str__(self):
+        return f"{self.lastname} {self.firstname}"
 
 
 class MessageChannels(models.Model):
@@ -1240,8 +1253,8 @@ class PageRedirects(models.Model):
 
 class Pages(models.Model):
     category = models.ForeignKey(Categories, models.DO_NOTHING, blank=True, null=True)
-    translation_parent = models.ForeignKey('self', models.DO_NOTHING, blank=True, null=True)
-    variant_parent = models.ForeignKey('self', models.DO_NOTHING, blank=True, null=True)
+    translation_parent = models.ForeignKey('self', models.DO_NOTHING, related_name='translation_children', blank=True, null=True)
+    variant_parent = models.ForeignKey('self', models.DO_NOTHING, related_name='variant_children', blank=True, null=True)
     is_published = models.IntegerField()
     date_added = models.DateTimeField(blank=True, null=True)
     created_by = models.IntegerField(blank=True, null=True)
@@ -1752,6 +1765,9 @@ class Users(models.Model):
     class Meta:
         managed = False
         db_table = 'users'
+
+    def __str__(self):
+        return f"{self.last_name} {self.first_name}"
 
 
 class VideoHits(models.Model):
