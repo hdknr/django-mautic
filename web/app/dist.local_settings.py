@@ -6,7 +6,15 @@ DATABASES = {
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
-    }
+    },
+    'mautic': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'localhost',
+        'NAME': 'tbmautic', 'USER': 'tbmautic', 'PASSWORD': 'ais8Quai',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
+    },
 }
 ALLOWED_HOSTS = ['localhost', 'develop.local']
 # URL_PREFIX = '/prtool'

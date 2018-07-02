@@ -117,7 +117,7 @@ STATIC_URL = '/static/'
 ###
 LANGUAGE_CODE = 'ja'
 TIME_ZONE = 'Asia/Tokyo'
-
+DATABASE_ROUTERS = ['app.databases.DatabaseRouter']
 
 ####
 if os.path.isfile(os.path.join(BASE_DIR, 'app/local_settings.py')):
