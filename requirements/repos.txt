@@ -1,0 +1,4 @@
+-e git+https://github.com/hdknr/amazon-pay-sdk-python.git#egg=amazon_pay
+-e git+https://github.com/hdknr/django-amazonpay.git#egg=amazonpay
+-e git+https://github.com/hdknr/django-locations_jp.git#egg=locations_jp
+-e git+https://github.com/hdknr/django-myaccounts.git#egg=myaccounts
