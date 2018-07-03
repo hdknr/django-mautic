@@ -10,13 +10,11 @@ DATABASES = {
     'mautic': {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': 'localhost',
-        'NAME': 'tbmautic', 'USER': 'tbmautic', 'PASSWORD': 'ais8Quai',
+        'NAME': 'mautic', 'USER': 'mautic', 'PASSWORD': 'mautic',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
     },
 }
-ALLOWED_HOSTS = ['localhost', 'develop.local']
-# URL_PREFIX = '/prtool'
 URL_PREFIX = ''
 STATIC_URL = f'{URL_PREFIX}/static/'            

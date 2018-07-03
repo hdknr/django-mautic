@@ -3,18 +3,6 @@ django
 
 # Rest
 requests
-djangorestframework
-djangorestframework-filters
-
-# Model
-django-filter
 
 # Tools
-ipython
 django-click
-django-extensions
-beautifulsoup4
-jupyter
-
-# Data
-pyexcel-xlsx
