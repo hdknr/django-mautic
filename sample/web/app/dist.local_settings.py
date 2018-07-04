@@ -18,3 +18,6 @@ DATABASES = {
 }
 URL_PREFIX = ''
 STATIC_URL = f'{URL_PREFIX}/static/'            
+MAUTIC = {
+    'base': 'http://localhost:8000/ma',
+}
