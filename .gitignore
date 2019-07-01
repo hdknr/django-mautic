@@ -48,3 +48,6 @@ web/ui/sources.json
 # jupyter
 
 .ipynb_checkpoints
+
+# data
+*.mmdb

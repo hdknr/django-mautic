@@ -6,3 +6,6 @@ requests
 
 # Tools
 django-click
+
+# Geo
+geoip2 

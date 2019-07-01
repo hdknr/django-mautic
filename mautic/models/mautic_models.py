@@ -7,6 +7,7 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from . import methods
 
 
 class AssetDownloads(models.Model):
@@ -668,7 +669,7 @@ class IntegrationEntity(models.Model):
         db_table = 'integration_entity'
 
 
-class IpAddresses(models.Model):
+class IpAddresses(models.Model, methods.IpAddresses):
     ip_address = models.CharField(max_length=45)
     ip_details = models.TextField(blank=True, null=True)
 
