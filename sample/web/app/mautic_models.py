@@ -6,7 +6,6 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
 
 
 class AssetDownloads(models.Model):
@@ -60,9 +59,6 @@ class Assets(models.Model):
         managed = False
         db_table = 'assets'
 
-    def __str__(self):
-        return self.title
-
 
 class AuditLog(models.Model):
     user_id = models.IntegerField()
@@ -115,8 +111,7 @@ class CampaignEvents(models.Model):
 
 
 class CampaignFormXref(models.Model):
-    # campaign = models.ForeignKey('Campaigns', models.DO_NOTHING, primary_key=True)
-    campaign = models.ForeignKey('Campaigns', models.DO_NOTHING)
+    campaign = models.ForeignKey('Campaigns', models.DO_NOTHING, primary_key=True)
     form = models.ForeignKey('Forms', models.DO_NOTHING)
 
     class Meta:
@@ -126,8 +121,7 @@ class CampaignFormXref(models.Model):
 
 
 class CampaignLeadEventFailedLog(models.Model):
-    # log = models.ForeignKey('CampaignLeadEventLog', models.DO_NOTHING, primary_key=True)
-    log = models.ForeignKey('CampaignLeadEventLog', models.DO_NOTHING)
+    log = models.ForeignKey('CampaignLeadEventLog', models.DO_NOTHING, primary_key=True)
     date_added = models.DateTimeField()
     reason = models.TextField(blank=True, null=True)
 
@@ -158,8 +152,7 @@ class CampaignLeadEventLog(models.Model):
 
 
 class CampaignLeadlistXref(models.Model):
-    # campaign = models.ForeignKey('Campaigns', models.DO_NOTHING, primary_key=True)
-    campaign = models.ForeignKey('Campaigns', models.DO_NOTHING)
+    campaign = models.ForeignKey('Campaigns', models.DO_NOTHING, primary_key=True)
     leadlist = models.ForeignKey('LeadLists', models.DO_NOTHING)
 
     class Meta:
@@ -169,8 +162,7 @@ class CampaignLeadlistXref(models.Model):
 
 
 class CampaignLeads(models.Model):
-    # campaign = models.ForeignKey('Campaigns', models.DO_NOTHING, primary_key=True)
-    campaign = models.ForeignKey('Campaigns', models.DO_NOTHING)
+    campaign = models.ForeignKey('Campaigns', models.DO_NOTHING, primary_key=True)
     lead = models.ForeignKey('Leads', models.DO_NOTHING)
     date_added = models.DateTimeField()
     manually_removed = models.IntegerField()
@@ -228,13 +220,9 @@ class Categories(models.Model):
         managed = False
         db_table = 'categories'
 
-    def __str__(self):
-        return self.title
-
 
 class ChannelUrlTrackables(models.Model):
-    # redirect = models.ForeignKey('PageRedirects', models.DO_NOTHING, primary_key=True)
-    redirect = models.ForeignKey('PageRedirects', models.DO_NOTHING)
+    redirect = models.ForeignKey('PageRedirects', models.DO_NOTHING, primary_key=True)
     channel_id = models.IntegerField()
     channel = models.CharField(max_length=255)
     hits = models.IntegerField()
@@ -282,8 +270,7 @@ class Companies(models.Model):
 
 
 class CompaniesLeads(models.Model):
-    # company = models.ForeignKey(Companies, models.DO_NOTHING, primary_key=True)
-    company = models.ForeignKey(Companies, models.DO_NOTHING)
+    company = models.ForeignKey(Companies, models.DO_NOTHING, primary_key=True)
     lead = models.ForeignKey('Leads', models.DO_NOTHING)
     date_added = models.DateTimeField()
     is_primary = models.IntegerField(blank=True, null=True)
@@ -309,8 +296,8 @@ class ContactMergeRecords(models.Model):
 
 class DynamicContent(models.Model):
     category = models.ForeignKey(Categories, models.DO_NOTHING, blank=True, null=True)
-    translation_parent = models.ForeignKey('self', models.DO_NOTHING, related_name='translation_children', blank=True, null=True)
-    variant_parent = models.ForeignKey('self', models.DO_NOTHING, related_name='variant_children', blank=True, null=True)
+    translation_parent = models.ForeignKey('self', models.DO_NOTHING, blank=True, null=True)
+    variant_parent = models.ForeignKey('self', models.DO_NOTHING, blank=True, null=True)
     is_published = models.IntegerField()
     date_added = models.DateTimeField(blank=True, null=True)
     created_by = models.IntegerField(blank=True, null=True)
@@ -367,8 +354,7 @@ class DynamicContentStats(models.Model):
 
 
 class EmailAssetsXref(models.Model):
-    # email = models.ForeignKey('Emails', models.DO_NOTHING, primary_key=True)
-    email = models.ForeignKey('Emails', models.DO_NOTHING)
+    email = models.ForeignKey('Emails', models.DO_NOTHING, primary_key=True)
     asset = models.ForeignKey(Assets, models.DO_NOTHING)
 
     class Meta:
@@ -389,8 +375,7 @@ class EmailCopies(models.Model):
 
 
 class EmailListXref(models.Model):
-    # email = models.ForeignKey('Emails', models.DO_NOTHING, primary_key=True)
-    email = models.ForeignKey('Emails', models.DO_NOTHING)
+    email = models.ForeignKey('Emails', models.DO_NOTHING, primary_key=True)
     leadlist = models.ForeignKey('LeadLists', models.DO_NOTHING)
 
     class Meta:
@@ -449,8 +434,8 @@ class EmailStatsDevices(models.Model):
 
 class Emails(models.Model):
     category = models.ForeignKey(Categories, models.DO_NOTHING, blank=True, null=True)
-    translation_parent = models.ForeignKey('self', models.DO_NOTHING, related_name='translation_children', blank=True, null=True)
-    variant_parent = models.ForeignKey('self', models.DO_NOTHING, related_name='variant_children', blank=True, null=True)
+    translation_parent = models.ForeignKey('self', models.DO_NOTHING, blank=True, null=True)
+    variant_parent = models.ForeignKey('self', models.DO_NOTHING, blank=True, null=True)
     unsubscribeform = models.ForeignKey('Forms', models.DO_NOTHING, blank=True, null=True)
     preference_center = models.ForeignKey('Pages', models.DO_NOTHING, blank=True, null=True)
     is_published = models.IntegerField()
@@ -579,6 +564,92 @@ class FormFields(models.Model):
         db_table = 'form_fields'
 
 
+class FormResults1Fomu(models.Model):
+    submission_id = models.IntegerField(primary_key=True)
+    form_id = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'form_results_1_fomu'
+        unique_together = (('submission_id', 'form_id'),)
+
+
+class FormResults2Documentdo(models.Model):
+    submission_id = models.IntegerField(primary_key=True)
+    form_id = models.IntegerField()
+    yu_she_ming = models.TextField(blank=True, null=True)
+    email = models.TextField(blank=True, null=True)
+    dan_dang_zhe_yang_xing = models.TextField(blank=True, null=True)
+    dan_dang_zhe_yang_ming = models.TextField(blank=True, null=True)
+    dian_hua_fan_hao = models.TextField(blank=True, null=True)
+    dou_dao_fu_xian = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'form_results_2_documentdo'
+        unique_together = (('submission_id', 'form_id'),)
+
+
+class FormResults3Partnerpro(models.Model):
+    submission_id = models.IntegerField(primary_key=True)
+    form_id = models.IntegerField()
+    yu_she_ming = models.TextField(blank=True, null=True)
+    yu_sheweb_url = models.TextField(blank=True, null=True)
+    go_dan_dang_zhe_yang_ming = models.TextField(blank=True, null=True)
+    go_dan_dang_zhe_yang_ming1 = models.TextField(blank=True, null=True)
+    go_dan_dang_zhe_yangmerua1 = models.TextField(blank=True, null=True)
+    go_dan_dang_zhe_yang_dian = models.TextField(blank=True, null=True)
+    zhu_yao_qu_yin_zhi_pin = models.TextField(blank=True, null=True)
+    zhu_yao_fan_mai_de_yu = models.TextField(blank=True, null=True)
+    xiang_ding_fan_mai_tai_sh = models.TextField(blank=True, null=True)
+    dou_dao_fu_xian = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'form_results_3_partnerpro'
+        unique_together = (('submission_id', 'form_id'),)
+
+
+class FormResults4Recruitcon(models.Model):
+    submission_id = models.IntegerField(primary_key=True)
+    form_id = models.IntegerField()
+    han_zi_xing = models.TextField(blank=True, null=True)
+    han_zi_ming = models.TextField(blank=True, null=True)
+    kana_xing = models.TextField(blank=True, null=True)
+    kana_ming = models.TextField(blank=True, null=True)
+    dian_hua_fan_hao = models.TextField(blank=True, null=True)
+    meruadoresu = models.TextField(blank=True, null=True)
+    xi_wang_zhi_zhong = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'form_results_4_recruitcon'
+        unique_together = (('submission_id', 'form_id'),)
+
+
+class FormResults5Contact(models.Model):
+    submission_id = models.IntegerField(primary_key=True)
+    form_id = models.IntegerField()
+    yu_she_ming = models.TextField(blank=True, null=True)
+    go_dan_dang_zhe_xing = models.TextField(blank=True, null=True)
+    go_dan_dang_zhe_ming1 = models.TextField(blank=True, null=True)
+    meruadoresu = models.TextField(blank=True, null=True)
+    o_wen_hese_jian_ming = models.TextField(blank=True, null=True)
+    o_wen_hese_zhong_bie = models.TextField(blank=True, null=True)
+    dui_xiang_zhi_pin = models.TextField(blank=True, null=True)
+    xiang_ding_tai_shu = models.TextField(blank=True, null=True)
+    xian_zai_li_yong_zhongnos = models.TextField(blank=True, null=True)
+    zai_fan_dui_xiang_qi_ye_g = models.TextField(blank=True, null=True)
+    o_wen_hese_nei_rong = models.TextField(blank=True, null=True)
+    dian_hua_fan_hao = models.TextField(blank=True, null=True)
+    dou_dao_fu_xian = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'form_results_5_contact'
+        unique_together = (('submission_id', 'form_id'),)
+
+
 class FormSubmissions(models.Model):
     form = models.ForeignKey('Forms', models.DO_NOTHING)
     ip = models.ForeignKey('IpAddresses', models.DO_NOTHING)
@@ -675,9 +746,6 @@ class IpAddresses(models.Model):
     class Meta:
         managed = False
         db_table = 'ip_addresses'
-
-    def __str__(self):
-        return self.ip_address
 
 
 class LeadCategories(models.Model):
@@ -801,8 +869,7 @@ class LeadFrequencyrules(models.Model):
 
 
 class LeadIpsXref(models.Model):
-    # lead = models.ForeignKey('Leads', models.DO_NOTHING, primary_key=True)
-    lead = models.ForeignKey('Leads', models.DO_NOTHING)
+    lead = models.ForeignKey('Leads', models.DO_NOTHING, primary_key=True)
     ip = models.ForeignKey(IpAddresses, models.DO_NOTHING)
 
     class Meta:
@@ -831,16 +898,10 @@ class LeadLists(models.Model):
     class Meta:
         managed = False
         db_table = 'lead_lists'
-        verbose_name = _('Segment')
-        verbose_name_plural = _('Segments')
-
-    def __str__(self):
-        return f"{self.name}"
 
 
 class LeadListsLeads(models.Model):
-    # leadlist = models.ForeignKey(LeadLists, models.DO_NOTHING, primary_key=True)
-    leadlist = models.ForeignKey(LeadLists, models.DO_NOTHING)
+    leadlist = models.ForeignKey(LeadLists, models.DO_NOTHING, primary_key=True)
     lead = models.ForeignKey('Leads', models.DO_NOTHING)
     date_added = models.DateTimeField()
     manually_removed = models.IntegerField()
@@ -850,8 +911,6 @@ class LeadListsLeads(models.Model):
         managed = False
         db_table = 'lead_lists_leads'
         unique_together = (('leadlist', 'lead'),)
-        verbose_name = _('Segmented Lead')
-        verbose_name_plural = _('Segmented Leads')
 
 
 class LeadNotes(models.Model):
@@ -910,8 +969,7 @@ class LeadTags(models.Model):
 
 
 class LeadTagsXref(models.Model):
-    # lead = models.ForeignKey('Leads', models.DO_NOTHING, primary_key=True)
-    lead = models.ForeignKey('Leads', models.DO_NOTHING)
+    lead = models.ForeignKey('Leads', models.DO_NOTHING, primary_key=True)
     tag = models.ForeignKey(LeadTags, models.DO_NOTHING)
 
     class Meta:
@@ -989,11 +1047,6 @@ class Leads(models.Model):
     class Meta:
         managed = False
         db_table = 'leads'
-        verbose_name = _('Contanct')
-        verbose_name_plural = _('Contacts')
-
-    def __str__(self):
-        return f"{self.lastname} {self.firstname}"
 
 
 class MessageChannels(models.Model):
@@ -1090,8 +1143,7 @@ class Monitoring(models.Model):
 
 
 class MonitoringLeads(models.Model):
-    # monitor = models.ForeignKey(Monitoring, models.DO_NOTHING, primary_key=True)
-    monitor = models.ForeignKey(Monitoring, models.DO_NOTHING)
+    monitor = models.ForeignKey(Monitoring, models.DO_NOTHING, primary_key=True)
     lead = models.ForeignKey(Leads, models.DO_NOTHING)
     date_added = models.DateTimeField()
 
@@ -1210,8 +1262,7 @@ class Oauth2Refreshtokens(models.Model):
 
 
 class Oauth2UserClientXref(models.Model):
-    # client = models.ForeignKey(Oauth2Clients, models.DO_NOTHING, primary_key=True)
-    client = models.ForeignKey(Oauth2Clients, models.DO_NOTHING)
+    client = models.ForeignKey(Oauth2Clients, models.DO_NOTHING, primary_key=True)
     user = models.ForeignKey('Users', models.DO_NOTHING)
 
     class Meta:
@@ -1275,8 +1326,8 @@ class PageRedirects(models.Model):
 
 class Pages(models.Model):
     category = models.ForeignKey(Categories, models.DO_NOTHING, blank=True, null=True)
-    translation_parent = models.ForeignKey('self', models.DO_NOTHING, related_name='translation_children', blank=True, null=True)
-    variant_parent = models.ForeignKey('self', models.DO_NOTHING, related_name='variant_children', blank=True, null=True)
+    translation_parent = models.ForeignKey('self', models.DO_NOTHING, blank=True, null=True)
+    variant_parent = models.ForeignKey('self', models.DO_NOTHING, blank=True, null=True)
     is_published = models.IntegerField()
     date_added = models.DateTimeField(blank=True, null=True)
     created_by = models.IntegerField(blank=True, null=True)
@@ -1374,8 +1425,7 @@ class Plugins(models.Model):
 
 
 class PointLeadActionLog(models.Model):
-    # point = models.ForeignKey('Points', models.DO_NOTHING, primary_key=True)
-    point = models.ForeignKey('Points', models.DO_NOTHING)
+    point = models.ForeignKey('Points', models.DO_NOTHING, primary_key=True)
     lead = models.ForeignKey(Leads, models.DO_NOTHING)
     ip = models.ForeignKey(IpAddresses, models.DO_NOTHING, blank=True, null=True)
     date_fired = models.DateTimeField()
@@ -1387,8 +1437,7 @@ class PointLeadActionLog(models.Model):
 
 
 class PointLeadEventLog(models.Model):
-    # event = models.ForeignKey('PointTriggerEvents', models.DO_NOTHING, primary_key=True)
-    event = models.ForeignKey('PointTriggerEvents', models.DO_NOTHING)
+    event = models.ForeignKey('PointTriggerEvents', models.DO_NOTHING, primary_key=True)
     lead = models.ForeignKey(Leads, models.DO_NOTHING)
     ip = models.ForeignKey(IpAddresses, models.DO_NOTHING, blank=True, null=True)
     date_fired = models.DateTimeField()
@@ -1474,8 +1523,7 @@ class PushIds(models.Model):
 
 
 class PushNotificationListXref(models.Model):
-    # notification = models.ForeignKey('PushNotifications', models.DO_NOTHING, primary_key=True)
-    notification = models.ForeignKey('PushNotifications', models.DO_NOTHING)
+    notification = models.ForeignKey('PushNotifications', models.DO_NOTHING, primary_key=True)
     leadlist = models.ForeignKey(LeadLists, models.DO_NOTHING)
 
     class Meta:
@@ -1615,8 +1663,7 @@ class SamlIdEntry(models.Model):
 
 
 class SmsMessageListXref(models.Model):
-    # sms = models.ForeignKey('SmsMessages', models.DO_NOTHING, primary_key=True)
-    sms = models.ForeignKey('SmsMessages', models.DO_NOTHING)
+    sms = models.ForeignKey('SmsMessages', models.DO_NOTHING, primary_key=True)
     leadlist = models.ForeignKey(LeadLists, models.DO_NOTHING)
 
     class Meta:
@@ -1668,8 +1715,7 @@ class SmsMessages(models.Model):
 
 
 class StageLeadActionLog(models.Model):
-    # stage = models.ForeignKey('Stages', models.DO_NOTHING, primary_key=True)
-    stage = models.ForeignKey('Stages', models.DO_NOTHING)
+    stage = models.ForeignKey('Stages', models.DO_NOTHING, primary_key=True)
     lead = models.ForeignKey(Leads, models.DO_NOTHING)
     ip = models.ForeignKey(IpAddresses, models.DO_NOTHING, blank=True, null=True)
     date_fired = models.DateTimeField()
@@ -1792,9 +1838,6 @@ class Users(models.Model):
     class Meta:
         managed = False
         db_table = 'users'
-
-    def __str__(self):
-        return f"{self.last_name} {self.first_name}"
 
 
 class VideoHits(models.Model):

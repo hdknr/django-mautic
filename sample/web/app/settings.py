@@ -119,6 +119,7 @@ LANGUAGE_CODE = 'ja'
 TIME_ZONE = 'Asia/Tokyo'
 DATABASE_ROUTERS = ['app.databases.DatabaseRouter']
 INSTALLED_APPS += [
+    'app',
     'mautic',
 ]
 
