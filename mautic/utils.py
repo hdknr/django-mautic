@@ -1,7 +1,10 @@
 from django.utils import timezone
 from django.conf import settings
+import tarfile
+import urllib.request
 import geoip2.database
 import glob
+import os
 
 
 def user_to_contact(user):
@@ -50,3 +53,13 @@ def get_city(geocity, lang='ja'):
         )
 
     return res
+
+
+def download_geodb(url='https://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz'):
+    temp = urllib.request.urlretrieve(url, filename=None)[0]
+    with tarfile.open(temp, 'r:gz') as tar:
+        for name in tar.getnames():
+            if name.endswith('.mmdb'):
+                filename = os.path.join(settings.BASE_DIR, os.path.basename(name))
+                with open(filename, "wb") as out:
+                    out.write(tar.extractfile(name).read())
